@@ -25,13 +25,13 @@ if [[ ${wf} == 1 ]]; then
       echo "previous workflow execution exists and will be deleted"
       rm -rf ~/FileZip-WF 
    fi
-  cfy local init --install-plugins -p FileZip-WF.yaml  --input input.yaml
+  cfy local init --install-plugins -p FileZip-WF.yaml --input input.yaml
 else
    if [[ -d ~/FileZip-1host  ]]; then
       echo "previous workflow execution exists and will be deleted"
       rm -rf ~/FileZip-1host
    fi
-  cfy local init --install-plugins -p FileZip-1host.yaml  -i input.yaml
+  cfy local init --install-plugins -p FileZip-1host.yaml -i input.yaml
 fi
 
 cfy local execute -w install

@@ -1,5 +1,5 @@
 input-dir: 'Input-sample/'      #folder path of the input files
-input-file1: 'file.jpg'   #The input file
+input-file: 'file.jpg'   #The input file
 docker-image: 'dtdwd/filezip1'   #Docker image
 
 
