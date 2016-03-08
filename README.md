@@ -2,7 +2,7 @@
 
 ![myimage-alt-tag](https://github.com/WorkflowCenter-Repositories/FileZip-WF/raw/master/Filezip.jpg)
   
-FileZip is a simple workflow for zipping a file  
+FileZip is a simple workflow for zipping a file with password
   
   WF-Title: FileZip    
   version: 1.0    
