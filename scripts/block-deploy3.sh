@@ -8,10 +8,6 @@ BLOCK_NAME=$(ctx node properties block_name)
 BLOCK_URL=$3
 input=$4
 
-set +e
- Yum=$(sudo docker exec -it ${CONTAINER_ID} which yum)
-set -e
-
 ctx logger info "Deploying ${block} on ${CONTAINER_ID}"
 
         set +e

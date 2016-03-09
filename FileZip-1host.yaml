@@ -22,7 +22,7 @@ inputs:
   docker-image: 
       description: > 
         Docker image to be used for container building
-      default: 'ubuntu:14.04'
+      default: 'dtdwd/filezip1'
 
 node_types:
 
@@ -98,7 +98,7 @@ node_templates:
       block_name: importfile1.jar
       block_category: File Management
       service_type: block
-      Source: file.jpg
+      Source: { get_input: input-file }
     interfaces:
       cloudify.interfaces.lifecycle:
         configure:
@@ -179,7 +179,7 @@ node_templates:
           implementation: scripts/containers-clean.sh
           inputs:
             process:
-              args: []
+              args: [container]
         create:
           implementation: scripts/final-inhost.sh
           inputs:
