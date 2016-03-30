@@ -24,6 +24,12 @@ sudo docker exec -it ${CONTAINER_ID} [ ! -d tasks ] && sudo docker exec -it ${CO
 
 sudo docker exec -it ${CONTAINER_ID} [ ! -f tasks/${BLOCK_NAME} ] && sudo docker exec -it ${CONTAINER_ID} wget -O tasks/${BLOCK_NAME} ${BLOCK_URL} 
 
+var=$(echo ${BLOCK_NAME} | cut -f 1 -d '.')
+image=${var,,}
+ctx logger info "Creating ${image}"
+if [[ "$(docker images -q ${image} 2> /dev/null)" = "" ]]; then
+   sudo docker commit -m "new ${image} image" -a "rawa" ${CONTAINER_ID} dtdwd/${image}
+fi
 
 ctx logger info "Execute the block"
 sudo docker exec -it ${CONTAINER_ID} java -jar tasks/${BLOCK_NAME} ${blueprint} ${block} ${input}
