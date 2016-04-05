@@ -27,7 +27,7 @@ sudo docker exec -it ${CONTAINER_ID} [ ! -f tasks/${BLOCK_NAME} ] && sudo docker
 var=$(echo ${BLOCK_NAME} | cut -f 1 -d '.')
 image=${var,,}
 ctx logger info "Creating ${image}"
-if [[ "$(docker images -q ${image} 2> /dev/null)" = "" ]]; then
+if [[ "$(docker images -q dtdwd/${image} 2> /dev/null)" = "" && $blueprint = "FileZip-WF" ]]; then
    sudo docker commit -m "new ${image} image" -a "rawa" ${CONTAINER_ID} dtdwd/${image}
 fi
 
