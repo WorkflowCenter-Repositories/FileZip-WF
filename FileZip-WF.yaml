@@ -22,7 +22,7 @@ inputs:
   docker-image: 
       description: > 
         Docker image to be used for container building
-      default: 'dtdwd/filezip1'
+      default: 'ubuntu:14.04'
 
 node_types:
 
@@ -84,7 +84,7 @@ node_templates:
           implementation: scripts/java-install2.sh
           inputs:
             process:
-              args: [container1]
+              args: [container1, FileZip-WF, '8']
     relationships:
       - type: cloudify.relationships.depends_on
         target: container1
@@ -144,7 +144,7 @@ node_templates:
           implementation: scripts/java-install2.sh
           inputs:
             process:
-              args: [container2]
+              args: [container2, FileZip-WF, '8']
     relationships:
       - type: cloudify.relationships.contained_in
         target: container2
@@ -210,7 +210,7 @@ node_templates:
           implementation: scripts/java-install2.sh
           inputs:
             process:
-              args: [container3]
+              args: [container3, FileZip-WF, '7']
     relationships:
       - type: cloudify.relationships.contained_in
         target: container3

@@ -174,12 +174,7 @@ node_templates:
   finalBlock:
     type: cloudify.nodes.ApplicationModule
     interfaces:
-      cloudify.interfaces.lifecycle:
-        create:
-          implementation: scripts/image_create.sh
-          inputs:
-            process:
-             args: [FileZip-1host, container1]       
+      cloudify.interfaces.lifecycle:        
         configure:
           implementation: scripts/containers-clean.sh
           inputs:
