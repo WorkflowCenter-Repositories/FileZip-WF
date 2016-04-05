@@ -179,13 +179,13 @@ node_templates:
           implementation: scripts/image_create.sh
           inputs:
             process:
-             args: [FileZip-1host, container1]       
+             args: [FileZip-1host, container]       
         configure:
           implementation: scripts/containers-clean.sh
           inputs:
             process:
               args: [container]
-        create:
+        start:
           implementation: scripts/final-inhost.sh
           inputs:
             process:
