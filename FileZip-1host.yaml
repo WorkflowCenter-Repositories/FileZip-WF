@@ -49,7 +49,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: scripts/start-inhost.sh
+          implementation: Core-LifecycleScripts/start-inhost.sh
           inputs:
             process:
               args: [FileZip-1host]
@@ -64,7 +64,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: scripts/container.sh
+          implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
               args: [FileZip-1host]
@@ -107,7 +107,7 @@ node_templates:
             process:
              args: [FileZip-1host, container, { get_input: input-dir }, { get_input: input-file }]
         start: 
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
              args: [FileZip-1host, container, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importfile1.jar', { get_input: input-file }]
@@ -127,7 +127,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         start: 
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
              args: [FileZip-1host, container, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/filezip2.jar', rawa1975]
@@ -139,7 +139,7 @@ node_templates:
         source_interfaces:
           cloudify.interfaces.relationship_lifecycle:
             preconfigure:
-              implementation: scripts/datacopy.sh
+              implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
                   args: [ImportFile/output-1, ZipFile/input-1, FileZip-1host, container]
@@ -159,14 +159,14 @@ node_templates:
         source_interfaces:
           cloudify.interfaces.relationship_lifecycle:
             preconfigure:
-              implementation: scripts/datacopy.sh
+              implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
                   args: [ZipFile/output-1, ExportFiles/file-list, FileZip-1host, container]
     interfaces:
       cloudify.interfaces.lifecycle:
         start: 
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
              args: [FileZip-1host, container, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
@@ -176,17 +176,17 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: scripts/image_create.sh
+          implementation: Core-LifecycleScripts/image_create.sh
           inputs:
             process:
              args: [FileZip-1host, container1]       
         configure:
-          implementation: scripts/containers-clean.sh
+          implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
               args: [container]
         create:
-          implementation: scripts/final-inhost.sh
+          implementation: Core-LifecycleScripts/final-inhost.sh
           inputs:
             process:
               args: [FileZip-1host]

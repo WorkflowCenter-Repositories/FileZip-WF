@@ -49,7 +49,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: scripts/start-inhost.sh
+          implementation: Core-LifecycleScripts/start-inhost.sh
           inputs:
             process:
               args: [FileZip-WF]
@@ -64,7 +64,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: scripts/container.sh
+          implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
               args: [FileZip-WF]
@@ -107,7 +107,7 @@ node_templates:
             process:
              args: [FileZip-WF, container1, { get_input: input-dir }, { get_input: input-file }]
         start: 
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
              args: [FileZip-WF, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importfile1.jar', { get_input: input-file }]
@@ -124,7 +124,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         start:
-          implementation: scripts/container.sh
+          implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
               args: [FileZip-WF]
@@ -159,12 +159,12 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         configure:
-          implementation: scripts/containers-clean.sh
+          implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container1]
         start: 
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
              args: [FileZip-WF, container2, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/filezip2.jar', rawa1975]
@@ -178,7 +178,7 @@ node_templates:
         source_interfaces:
           cloudify.interfaces.relationship_lifecycle:
             preconfigure:
-              implementation: scripts/datacopy.sh
+              implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
                   args: [ImportFile/output-1, ZipFile/input-1, FileZip-WF, container2]
@@ -190,7 +190,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         start:
-          implementation: scripts/container.sh
+          implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
               args: [FileZip-WF]
@@ -210,7 +210,7 @@ node_templates:
           implementation: scripts/java-install2.sh
           inputs:
             process:
-              args: [container3, FileZip-WF, '7']
+              args: [container3, FileZip-WF, '8']
     relationships:
       - type: cloudify.relationships.contained_in
         target: container3
@@ -230,7 +230,7 @@ node_templates:
         source_interfaces:
           cloudify.interfaces.relationship_lifecycle:
             preconfigure:
-              implementation: scripts/datacopy.sh
+              implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
                   args: [ZipFile/output-1, ExportFiles/file-list, FileZip-WF, container3]
@@ -239,12 +239,12 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         configure:
-          implementation: scripts/containers-clean.sh
+          implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container2]
         start: 
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
              args: [FileZip-WF, container3, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
@@ -254,12 +254,12 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:        
         configure:
-          implementation: scripts/containers-clean.sh
+          implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
               args: [container3]
         create:
-          implementation: scripts/final-inhost.sh
+          implementation: Core-LifecycleScripts/final-inhost.sh
           inputs:
             process:
               args: [FileZip-WF]

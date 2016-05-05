@@ -6,6 +6,11 @@ CONTAINER_ID=$1
 blueprint=$2
 version=$3
 
+set +e 
+ java=$(sudo docker exec -it $CONTAINER_ID which java)
+set -e
+
+if [[ -z $java ]]; then
 sudo docker exec -it $CONTAINER_ID mkdir opt/jdk
 if [[ ! -d ~/$blueprint/libs ]]; then
     mkdir ~/$blueprint/libs
@@ -30,4 +35,4 @@ else if [[ $version = '7' ]]; then
      fi
 fi
 
-  
+fi  
