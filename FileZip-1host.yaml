@@ -179,13 +179,13 @@ node_templates:
           implementation: Core-LifecycleScripts/image_create.sh
           inputs:
             process:
-             args: [FileZip-1host, container1]       
+             args: [filezip-new, container]       
         configure:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
               args: [container]
-        create:
+        start:
           implementation: Core-LifecycleScripts/final-inhost.sh
           inputs:
             process:

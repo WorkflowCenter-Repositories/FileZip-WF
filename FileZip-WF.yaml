@@ -84,7 +84,7 @@ node_templates:
           implementation: scripts/java-install2.sh
           inputs:
             process:
-              args: [container1, FileZip-WF, '8']
+              args: [container1, FileZip-WF]
     relationships:
       - type: cloudify.relationships.depends_on
         target: container1
@@ -144,7 +144,7 @@ node_templates:
           implementation: scripts/java-install2.sh
           inputs:
             process:
-              args: [container2, FileZip-WF, '8']
+              args: [container2, FileZip-WF]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container2
