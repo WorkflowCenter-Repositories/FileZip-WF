@@ -101,6 +101,11 @@ node_templates:
       Source: { get_input: input-file }
     interfaces:
       cloudify.interfaces.lifecycle:
+        create:
+          implementation: Core-LifecycleScripts/task-download.sh
+          inputs:
+            process:
+             args: [FileZip-1host, container, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importfile1.jar']
         configure:
           implementation: scripts/get-input.sh
           inputs:
@@ -110,7 +115,7 @@ node_templates:
           implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
-             args: [FileZip-1host, container, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importfile1.jar', { get_input: input-file }]
+             args: [FileZip-1host, container, { get_input: input-file }]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container
@@ -126,14 +131,21 @@ node_templates:
       service_type: block
     interfaces:
       cloudify.interfaces.lifecycle:
+        create:
+          implementation: Core-LifecycleScripts/task-download.sh
+          inputs:
+            process:
+             args: [FileZip-1host, container, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/filezip2.jar']
         start: 
           implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
-             args: [FileZip-1host, container, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/filezip2.jar', rawa1975]
+             args: [FileZip-1host, container, rawa1975]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container
+      - type: cloudify.relationships.depends_on
+        target: Java
       - type: block_link
         target: ImportFile
         source_interfaces:
@@ -165,11 +177,16 @@ node_templates:
                   args: [ZipFile/output-1, ExportFiles/file-list, FileZip-1host, container]
     interfaces:
       cloudify.interfaces.lifecycle:
+        create:
+          implementation: Core-LifecycleScripts/task-download.sh
+          inputs:
+            process:
+             args: [FileZip-1host, container, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
         start: 
           implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
-             args: [FileZip-1host, container, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
+             args: [FileZip-1host, container]
 
   finalBlock:
     type: cloudify.nodes.ApplicationModule

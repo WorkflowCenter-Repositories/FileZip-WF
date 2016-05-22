@@ -101,6 +101,11 @@ node_templates:
       Source: { get_input: input-file }
     interfaces:
       cloudify.interfaces.lifecycle:
+        create:
+          implementation: Core-LifecycleScripts/task-download.sh
+          inputs:
+            process:
+             args: [FileZip-WF, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importfile1.jar']
         configure:
           implementation: scripts/get-input.sh
           inputs:
@@ -110,7 +115,7 @@ node_templates:
           implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
-             args: [FileZip-WF, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importfile1.jar', { get_input: input-file }]
+             args: [FileZip-WF, container1, { get_input: input-file }]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container1
@@ -158,6 +163,11 @@ node_templates:
       service_type: block
     interfaces:
       cloudify.interfaces.lifecycle:
+        create:
+          implementation: Core-LifecycleScripts/task-download.sh
+          inputs:
+            process:
+             args: [FileZip-WF, container2, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/filezip2.jar']
         configure:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
@@ -167,7 +177,7 @@ node_templates:
           implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
-             args: [FileZip-WF, container2, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/filezip2.jar', rawa1975]
+             args: [FileZip-WF, container2, rawa1975]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container2
@@ -238,6 +248,11 @@ node_templates:
         target: Java3
     interfaces:
       cloudify.interfaces.lifecycle:
+        create:
+          implementation: Core-LifecycleScripts/task-download.sh
+          inputs:
+            process:
+             args: [FileZip-WF, container3, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
         configure:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
@@ -247,7 +262,7 @@ node_templates:
           implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
-             args: [FileZip-WF, container3, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
+             args: [FileZip-WF, container3]
 
   finalBlock:
     type: cloudify.nodes.ApplicationModule
