@@ -1,6 +1,7 @@
 input-dir: 'Input-sample/'      #folder path of the input files
 input-file: 'file.jpg'   #The input file
 docker-image: 'dtdwd/filezip1'   #Docker image
+create_image: 'False'
 
 
 

@@ -24,6 +24,11 @@ inputs:
         Docker image to be used for container building
       default: 'ubuntu:14.04'
 
+  create_image:
+      description: > 
+        an option to create Docker images
+      default: 'False'
+
 node_types:
 
   docker_container:
@@ -102,17 +107,17 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: Core-LifecycleScripts/task-download.sh
+          implementation: Core-LifecycleScripts/task-download-multi.sh
           inputs:
             process:
-             args: [FileZip-WF, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importfile1.jar']
+             args: [{ get_input: create_image }, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importfile1.jar']
         configure:
           implementation: scripts/get-input.sh
           inputs:
             process:
              args: [FileZip-WF, container1, { get_input: input-dir }, { get_input: input-file }]
         start: 
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
              args: [FileZip-WF, container1, { get_input: input-file }]
@@ -164,17 +169,17 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: Core-LifecycleScripts/task-download.sh
+          implementation: Core-LifecycleScripts/task-download-multi.sh
           inputs:
             process:
-             args: [FileZip-WF, container2, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/filezip2.jar']
+             args: [{ get_input: create_image }, container2, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/filezip2.jar']
         configure:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container1]
         start: 
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
              args: [FileZip-WF, container2, rawa1975]
@@ -220,7 +225,7 @@ node_templates:
           implementation: scripts/java-install2.sh
           inputs:
             process:
-              args: [container3, FileZip-WF, '8']
+              args: [container3, FileZip-WF]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container3
@@ -249,17 +254,17 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: Core-LifecycleScripts/task-download.sh
+          implementation: Core-LifecycleScripts/task-download-multi.sh
           inputs:
             process:
-             args: [FileZip-WF, container3, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
+             args: [{ get_input: create_image }, container3, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
         configure:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container2]
         start: 
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
              args: [FileZip-WF, container3]

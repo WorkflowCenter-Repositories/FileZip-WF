@@ -24,6 +24,11 @@ inputs:
         Docker image to be used for container building
       default: 'dtdwd/filezip1'
 
+  create_image:
+      description: > 
+        an option to create Docker images
+      default: 'False'
+
 node_types:
 
   docker_container:
@@ -102,7 +107,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: Core-LifecycleScripts/task-download.sh
+          implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
              args: [FileZip-1host, container, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importfile1.jar']
@@ -112,7 +117,7 @@ node_templates:
             process:
              args: [FileZip-1host, container, { get_input: input-dir }, { get_input: input-file }]
         start: 
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
              args: [FileZip-1host, container, { get_input: input-file }]
@@ -132,12 +137,12 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: Core-LifecycleScripts/task-download.sh
+          implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
              args: [FileZip-1host, container, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/filezip2.jar']
         start: 
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
              args: [FileZip-1host, container, rawa1975]
@@ -178,12 +183,12 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: Core-LifecycleScripts/task-download.sh
+          implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
              args: [FileZip-1host, container, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
         start: 
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
              args: [FileZip-1host, container]
@@ -196,7 +201,7 @@ node_templates:
           implementation: Core-LifecycleScripts/image_create.sh
           inputs:
             process:
-             args: [filezip-new, container]       
+             args: [filezip-new, container, { get_input: create_image }]       
         configure:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
